@@ -34,6 +34,7 @@ export default function Contacts() {
           minHeight: 600,
           fontSize: 45,
           color: '#2d2d2d',
+          backgroundColor: '#ddf2d6',
           paddingBottom: 60,
         }}
       >
@@ -45,7 +46,7 @@ export default function Contacts() {
             marginBottom: 10,
             marginRight: 'auto',
             marginLeft: 'auto',
-            fontWeight: '600',
+            fontWeight: '500',
           }}
         >
           PHONEBOOK
