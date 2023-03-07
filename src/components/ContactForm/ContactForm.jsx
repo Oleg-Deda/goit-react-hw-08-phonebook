@@ -1,46 +1,71 @@
-import { Formik } from 'formik';
-import { StyledForm, Label, Input, Error, Button } from './ContactForm.styled';
+import { Formik, ErrorMessage } from 'formik';
+import * as yup from 'yup';
+import styled from 'styled-components';
+import { StyledForm, Label, Input,  Button } from './ContactForm.styled';
 import { useDispatch, useSelector } from 'react-redux';
 // import { toast } from 'react-hot-toast';
-import { addContact } from 'redux/operations';
-import { selectContacts } from 'redux/selectors';
+import { getContacts } from 'redux/contacts/selectors';
+import { addContact } from 'redux/contacts/operations';
 
+
+const schema = yup.object().shape({
+  name: yup.string().required(),
+  number: yup.string().min(13).max(13).required(),
+});
 
 const initialValues = {
   name: '',
   number: '',
 };
 
+export const ErrorText = styled.p`
+  font: 0.6em 'typewriter', sans-serif;
+  color: red;
+  margin-top: 5px;
+`;
+
+
+const FormError  = ({ name }) => {
+  return (
+    <ErrorMessage
+      name={name}
+      render={message => <ErrorText>{message}</ErrorText>}
+    />
+  );
+};
+
 export const ContactForm = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(selectContacts);
+  // const isLoading = useSelector(getIsLoading);
 
-  const handleSubmit = (values, { resetForm }) => {
-    if (contacts.find(contact => contact.name === values.name)) {
-        // toast.error(`Sorry, ${values.name} contact already exists.`);
+  const allContacts = useSelector(getContacts);
+
+  const handleSubmit = (contact, { resetForm }) => {
+    if (allContacts.some(item => item.name === contact.name)) {
+      alert(`Contact ${contact.name} already exist`);
       return;
     }
-    dispatch(addContact(values));
-    
-    // toast.success('Contact successfully added!');
+    dispatch(addContact(contact));
     resetForm();
   };
 
   return (
     <Formik
       initialValues={initialValues}
+      validationSchema={schema}
       onSubmit={handleSubmit}
         >
       <StyledForm>
         <Label>
           Name
-          <Input type="text" name="name" />
-          <Error component="div" name="name" />
+          <Input type="text" name="name" placeholder="Rosie Simpson" />
+          <FormError component="div" name="name" />
         </Label>
         <Label>
           Number
-          <Input type="tel" name="number" />
-          <Error component="div" name="number" />
+          <br />
+          <Input type="tel" name="number" placeholder="+380673454545" />
+          <FormError component="div" name="number" />
         </Label>
         <Button type="submit">Add contact</Button>
       </StyledForm>

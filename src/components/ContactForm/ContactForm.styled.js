@@ -26,7 +26,7 @@ export const Input = styled(Field)`
   border-radius: 5px;
 `;
 
-export const Error = styled(ErrorMessage)`
+export const FormError  = styled(ErrorMessage)`
   font-size: 11px;
   font-weight: 400;
 
