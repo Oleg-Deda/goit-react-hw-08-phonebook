@@ -26,15 +26,15 @@ export default function Contacts() {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          marginTop: 0,
+          marginTop: 5,
           marginBottom: 0,
           marginRight: 'auto',
           marginLeft: 'auto',
           maxWidth: 1280,
           minHeight: 600,
-          fontSize: 45,
+          fontSize: 40,
           color: '#2d2d2d',
-          backgroundColor: '#ddf2d6',
+          backgroundColor: '#ffffff',
           paddingBottom: 60,
         }}
       >
